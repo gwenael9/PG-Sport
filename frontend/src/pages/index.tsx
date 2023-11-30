@@ -1,11 +1,11 @@
+import CategorieCard from "@/components/CategorieCard";
 import Layout from "@/components/Layout";
-import RecentExos from "@/components/RecentExos";
 
 export default function Home() {
     return (
         <Layout title="Accueil">
-            <h1 className="text-white">Bienvenue !</h1>
-            <RecentExos />
+            <h1 className="pt-6 pb-6 text-2xl">Quelle séance voulez-vous faire ?</h1>
+            <CategorieCard />
         </Layout>
     )
 }

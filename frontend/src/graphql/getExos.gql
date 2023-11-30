@@ -1,0 +1,14 @@
+query Exos($categoryId: Int) {
+  exos(categoryId: $categoryId) {
+    id
+    poids
+    serie
+    rep
+    title
+    date
+    category {
+      id
+      name
+    }
+  }
+}

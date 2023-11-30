@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Arg, Query } from "type-graphql";
+import { Resolver, Mutation, Arg, Query, Int } from "type-graphql";
 import { GraphQLError } from "graphql";
 import { Like } from "typeorm";
 import {
@@ -24,6 +24,15 @@ export default class CategoriesResolver {
         where: { name: name ? Like(`%${name}%`) : undefined },
         order: { id: "desc" },
         });
+    }
+
+    @Query(() => Category)
+    async getCatById(@Arg("catId", () => Int) id: number) {
+        const cat = await Category.findOne({
+            where: { id },
+        });
+        if (!cat) throw new GraphQLError("not found");
+        return cat;
     }
 
     @Mutation(() => String)

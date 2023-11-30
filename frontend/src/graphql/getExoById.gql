@@ -1,0 +1,12 @@
+query GetExoById($exoId: Int!) {
+  getExoById(exoId: $exoId) {
+    id
+    title
+    poids
+    rep
+    serie
+    category {
+      id
+    }
+  }
+}

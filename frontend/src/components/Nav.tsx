@@ -1,17 +1,27 @@
-import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import qs from "query-string";
 
 export default function Nav() {
 
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    // search
+    const router = useRouter();
+    const [search, setSearch] = useState("");
+    useEffect(() => {
+        if (typeof router.query.title === "string") {
+            setSearch(router.query.title)
+        }
+    }, [router.query.title]);
+    const searchParams = qs.parse(window.location.search) as any;
 
+    // dynamic nav
+    const [isCollapsed, setIsCollapsed] = useState(false);
     const handleExpandBtnClick = () => {
         setIsCollapsed(!isCollapsed);
 
         // ajout du style 'collapsed' au body
         document.body.classList.toggle('collapsed');
     };
-
 
     return (
         <nav className="sidebar">
@@ -33,12 +43,41 @@ export default function Nav() {
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M9 9L13 13M5.66667 10.3333C3.08934 10.3333 1 8.244 1 5.66667C1 3.08934 3.08934 1 5.66667 1C8.244 1 10.3333 3.08934 10.3333 5.66667C10.3333 8.244 8.244 10.3333 5.66667 10.3333Z" stroke="#697089" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                <input type="search" placeholder="Recherche" />
+                <form className="text-field-with-button" onSubmit={(e) => { 
+                    e.preventDefault(); 
+                    router.push(
+                        `/search?${qs.stringify({
+                            ...searchParams,
+                            title: search,
+                        })}`
+                    );
+                }}>
+                    <input
+                        className="text-field main-search-field text-gray-700"
+                        type="search"
+                        value={search}
+                        placeholder="Rechercher.."
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </form>
             </div>
 
             <div className="sidebar-links">
                 <h2>Menu</h2>
                 <ul>
+                    <li>
+                        <a href="/" title="accueil" className="tooltip">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-layout-dashboard" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M4 4h6v8h-6z" />
+                                <path d="M4 16h6v4h-6z" />
+                                <path d="M14 12h6v8h-6z" />
+                                <path d="M14 4h6v4h-6z" />
+                            </svg>
+                            <span className="link hide">Accueil</span>
+                            <span className="tooltip__content">Accueil</span>
+                        </a>
+                    </li>
                     <li>
                         <a href="/seances" title="seances" className="tooltip">
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-layout-dashboard" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -53,7 +92,7 @@ export default function Nav() {
                         </a>
                     </li>
                     <li>
-                        <a href="/suivi" title="suivi" className="tooltip">
+                        <a href="/newExo" title="ajouter" className="tooltip">
                             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-layout-dashboard" width="24" height="24" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                                 <path d="M4 4h6v8h-6z" />
@@ -61,8 +100,8 @@ export default function Nav() {
                                 <path d="M14 12h6v8h-6z" />
                                 <path d="M14 4h6v4h-6z" />
                             </svg>
-                            <span className="link hide">Suivi</span>
-                            <span className="tooltip__content">Suivi</span>
+                            <span className="link hide">Ajouter</span>
+                            <span className="tooltip__content">Ajouter</span>
                         </a>
                     </li>
                 </ul>
@@ -108,6 +147,5 @@ export default function Nav() {
                 </a>
             </div>
         </nav>
-
     )
 }

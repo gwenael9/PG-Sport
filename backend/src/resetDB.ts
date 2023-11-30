@@ -27,7 +27,8 @@ async function main() {
     title: "Prise marteau",
     rep: 8,
     serie: 3,
-    poids: 12
+    poids: 12,
+    date: "29/11"
   });
 
   const testCat = Category.create({ name: "bras"});

@@ -1,0 +1,5 @@
+mutation UpdateExo($data: UpdateExoInput!, $exoId: Float!) {
+  updateExo(data: $data, exoId: $exoId) {
+    id
+  }
+}

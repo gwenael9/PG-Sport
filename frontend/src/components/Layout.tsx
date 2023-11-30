@@ -1,6 +1,5 @@
 import Head from "next/head";
 import { ReactNode } from "react";
-import Header from "./Header";
 import Nav from "./Nav";
 
 interface LayoutProps {
@@ -17,9 +16,9 @@ export default function Layout({ children, title }: LayoutProps) {
             <meta name="viewport" content="width=device-width, initial-scale-1"/>
             <link rel="icon" href="favicon.ico" />
         </Head>
-        <main className="flex">
+        <main className="flex bg-fond bg-cover bg-center min-h-screen">
             <Nav />
-            <div className="grow p-4 bg-secondary ml-5">{children}</div>
+            <div className="grow p-4 ml-5">{children}</div>
         </main>
     </>
     );

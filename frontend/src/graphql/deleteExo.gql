@@ -1,0 +1,3 @@
+mutation DeleteExo($exoId: Float!) {
+    deleteExo(exoId: $exoId)
+}

@@ -1,0 +1,6 @@
+query GetCatById($catId: Int!) {
+  getCatById(catId: $catId) {
+    id
+    name
+  }
+}

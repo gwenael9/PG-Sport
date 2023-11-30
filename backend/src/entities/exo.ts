@@ -2,7 +2,6 @@ import {
     Entity,
     BaseEntity,
     PrimaryGeneratedColumn,
-    CreateDateColumn,
     Column,
     ManyToOne,
   } from "typeorm";
@@ -34,9 +33,9 @@ export class Exo extends BaseEntity {
     @Field()
     poids: number;
 
-    @CreateDateColumn()
+    @Column({ length: 10})
     @Field()
-    createdAt: string;
+    date: string;
 
     @ManyToOne(() => Category, (c) => c.exos, {
         cascade: true,
@@ -64,6 +63,10 @@ export class NewExoInput {
     @Min(0, { message: "le poids doit etre positif" })
     poids: number;
 
+    @Field()
+    @Length(2, 10, { message: "La date doit être sous format JJ/MM/AAAA" })
+    date: string;
+
     @Field(() => ObjectId)
     category: ObjectId;
 }
@@ -85,6 +88,10 @@ export class UpdateExoInput {
     @Field({ nullable: true })
     @Min(0, { message: "le poids doit etre positif" })
     poids?: number;
+
+    @Field({ nullable: true })
+    @Length(2, 15, { message: "La date doit être sous format JJ/MM" })
+    date?: string;
 
     @Field(() => ObjectId, { nullable: true })
     category?: ObjectId;
